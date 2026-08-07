@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>零源·智能未来窗 - 第九届中国高校智能机器人创意大赛</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif; background: #0a0e27; color: #e0e6f0; line-height: 1.7; overflow-x: hidden; }
+
+/* Hero with slide_01 background */
+.hero { position: relative; min-height: 100vh; display: flex; align-items: center; justify-content: center; text-align: center; overflow: hidden; }
+.hero-bg { position: absolute; inset: 0; background: url('imgs/slide_01.png') center/cover no-repeat; filter: brightness(0.95) saturate(1.1); z-index: 0; }
+
+
+
+
+
+
+
+
+
+
+
+
+.section { padding: 80px 20px; max-width: 1100px; margin: 0 auto; }
+.section-title { text-align: center; margin-bottom: 50px; }
+.section-title h3 { font-size: clamp(24px, 4vw, 36px); font-weight: 700; color: #ffffff; margin-bottom: 10px; }
+.section-title .line { display: block; width: 60px; height: 3px; background: linear-gradient(90deg, #40a9ff, #00d2ff); margin: 0 auto; border-radius: 2px; }
+.section-title p { color: #667a99; font-size: 15px; margin-top: 12px; }
+
+.video-section { background: linear-gradient(180deg, #0a0e27, #0d1b3e); }
+.video-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 30px; }
+.video-card { background: linear-gradient(145deg, #111d3a, #0d1730); border-radius: 16px; overflow: hidden; border: 1px solid rgba(64,169,255,0.1); transition: transform 0.3s, box-shadow 0.3s; }
+.video-card:hover { transform: translateY(-4px); box-shadow: 0 12px 40px rgba(64,169,255,0.15); }
+.video-card video { width: 100%; display: block; background: #000; }
+.video-card .info { padding: 20px 24px; }
+.video-card .info h4 { font-size: 18px; color: #ffffff; margin-bottom: 6px; }
+.video-card .info p { font-size: 13px; color: #667a99; }
+
+.gallery-section { background: linear-gradient(180deg, #0d1b3e, #0a1628); }
+.gallery { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; }
+.gallery-item { position: relative; border-radius: 12px; overflow: hidden; aspect-ratio: 16/10; background: #111d3a; border: 1px solid rgba(64,169,255,0.08); cursor: pointer; transition: transform 0.3s, box-shadow 0.3s; }
+.gallery-item:hover { transform: scale(1.03); box-shadow: 0 8px 30px rgba(64,169,255,0.2); z-index: 2; }
+.gallery-item img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.gallery-item .overlay { position: absolute; bottom: 0; left: 0; right: 0; padding: 20px; background: linear-gradient(transparent, rgba(0,0,0,0.8)); }
+.gallery-item .overlay span { color: #ffffff; font-size: 14px; font-weight: 500; }
+
+.features { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 24px; }
+.feature-card { background: linear-gradient(145deg, #111d3a, #0d1730); border-radius: 14px; padding: 32px 24px; text-align: center; border: 1px solid rgba(64,169,255,0.08); transition: transform 0.3s, box-shadow 0.3s; }
+.feature-card:hover { transform: translateY(-4px); box-shadow: 0 12px 30px rgba(64,169,255,0.12); }
+.feature-icon { font-size: 40px; margin-bottom: 16px; }
+.feature-card h4 { font-size: 16px; color: #ffffff; margin-bottom: 10px; }
+.feature-card p { font-size: 13px; color: #667a99; }
+
+.qr-section { background: linear-gradient(180deg, #0a1628, #0a0e27); }
+.qr-card { display: flex; align-items: center; gap: 40px; background: linear-gradient(145deg, #111d3a, #0d1730); border-radius: 16px; padding: 40px; border: 1px solid rgba(64,169,255,0.12); max-width: 700px; margin: 0 auto; flex-wrap: wrap; justify-content: center; }
+.qr-link { display: inline-block; transition: transform 0.3s, box-shadow 0.3s; border-radius: 12px; }
+.qr-link:hover { transform: scale(1.06); box-shadow: 0 8px 30px rgba(64,169,255,0.3); }
+.qr-link img { width: 200px; height: 200px; border-radius: 12px; background: #fff; padding: 12px; object-fit: contain; display: block; }
+.qr-info h4 { font-size: 22px; color: #ffffff; margin-bottom: 10px; }
+.qr-info p { font-size: 14px; color: #667a99; margin-bottom: 6px; }
+.qr-info .qr-tip { display: inline-block; margin-top: 10px; background: rgba(64,169,255,0.12); color: #40a9ff; padding: 6px 16px; border-radius: 20px; font-size: 13px; }
+
+.footer { text-align: center; padding: 40px 20px; background: #060b1a; color: #556688; font-size: 13px; border-top: 1px solid rgba(64,169,255,0.06); }
+.footer span { color: #40a9ff; }
+
+.lightbox { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 1000; justify-content: center; align-items: center; }
+.lightbox.active { display: flex; }
+.lightbox img { max-width: 92vw; max-height: 90vh; border-radius: 8px; object-fit: contain; }
+.lightbox-close { position: absolute; top: 20px; right: 30px; color: #fff; font-size: 36px; cursor: pointer; background: none; border: none; z-index: 1001; }
+.lightbox-prev, .lightbox-next { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(255,255,255,0.1); color: #fff; font-size: 28px; border: none; cursor: pointer; padding: 14px 18px; border-radius: 50%; transition: background 0.3s; }
+.lightbox-prev:hover, .lightbox-next:hover { background: rgba(255,255,255,0.25); }
+.lightbox-prev { left: 20px; }
+.lightbox-next { right: 20px; }
+
+@media (max-width: 600px) {
+  .video-grid { grid-template-columns: 1fr; }
+  .qr-card { flex-direction: column; text-align: center; padding: 28px 20px; }
+}
+</style>
+</head>
+<body>
+
+<section class="hero">
+  <div class="hero-bg"></div>
+</section>
+
+<section class="video-section">
+  <div class="section">
+    <div class="section-title">
+      <h3>视频展示</h3>
+      <span class="line"></span>
+      <p>点击播放，了解作品详情</p>
+    </div>
+    <div class="video-grid">
+      <div class="video-card">
+        <video controls poster="" preload="metadata" playsinline>
+          <source src="demo.mp4" type="video/mp4">
+          您的浏览器不支持视频播放
+        </video>
+        <div class="info">
+          <h4>动画演示</h4>
+          <p>智能未来窗工作原理与场景演示</p>
+        </div>
+      </div>
+      <div class="video-card">
+        <video controls poster="" preload="metadata" playsinline>
+          <source src="presentation.mp4" type="video/mp4">
+          您的浏览器不支持视频播放
+        </video>
+        <div class="info">
+          <h4>PPT讲解演示</h4>
+          <p>完整项目背景、技术方案与创新点介绍</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="gallery-section">
+  <div class="section">
+    <div class="section-title">
+      <h3>作品展示</h3>
+      <span class="line"></span>
+      <p>点击图片可放大查看</p>
+    </div>
+    <div class="gallery" id="gallery"></div>
+  </div>
+</section>
+
+<section style="background: linear-gradient(180deg, #0a1628, #0a0e27);">
+  <div class="section">
+    <div class="section-title">
+      <h3>创新亮点</h3>
+      <span class="line"></span>
+    </div>
+    <div class="features">
+      <div class="feature-card">
+        <div class="feature-icon">☀️</div>
+        <h4>三模式能源自适应</h4>
+        <p>光伏 + 温差发电 + 备用电池，智能切换能源模式</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🪟</div>
+        <h4>液电分子智能调光</h4>
+        <p>断电磨砂不透明，通电透明，自动调节室内光线</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">⚙️</div>
+        <h4>发条储能应急开窗</h4>
+        <p>纯机械备份，断电情况下依然能完成开窗操作</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🌡️</div>
+        <h4>环境多参数感知</h4>
+        <p>温度、湿度、光照、空气质量等多传感器融合</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="qr-section">
+  <div class="section">
+    <div class="section-title">
+      <h3>了解更多</h3>
+      <span class="line"></span>
+      <p>点击二维码或扫描，查看完整项目资料</p>
+    </div>
+    <div class="qr-card">
+      <a class="qr-link" id="qr-link" href="https://www.zhihuiwindow.me" target="_blank" title="点击跳转项目页面">
+        <img src="qrcode.png" alt="项目二维码" id="qr-img" onerror="this.src='data:image/svg+xml,' + encodeURIComponent('<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22200%22 height=%22200%22><rect fill=%22%23f0f0f0%22 width=%22200%22 height=%22200%22 rx=%228%22/><text x=%22100%22 y=%2290%22 text-anchor=%22middle%22 fill=%22%23999%22 font-size=%2214%22 font-family=%22sans-serif%22>请将草料二维码</text><text x=%22100%22 y=%22110%22 text-anchor=%22middle%22 fill=%22%23999%22 font-size=%2214%22 font-family=%22sans-serif%22>生成的图片</text><text x=%22100%22 y=%22130%22 text-anchor=%22middle%22 fill=%22%23999%22 font-size=%2214%22 font-family=%22sans-serif%22>保存为 qrcode.png</text></svg>')">
+      </a>
+      <div class="qr-info">
+        <h4>扫码或点击二维码</h4>
+        <p>微信扫码 / 点击图片即可跳转</p>
+        <p>查看完整项目介绍与资料</p>
+        
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <p>第九届中国高校智能机器人创意大赛 · 机械创意赛项（本科组设计类）</p>
+  <p style="margin-top:6px;">作品名称：<span>零源·智能未来窗</span></p>
+</footer>
+
+<div class="lightbox" id="lightbox">
+  <button class="lightbox-close" onclick="closeLightbox()">&times;</button>
+  <button class="lightbox-prev" onclick="navigate(-1)">&#10094;</button>
+  <img id="lightbox-img" src="" alt="">
+  <button class="lightbox-next" onclick="navigate(1)">&#10095;</button>
+</div>
+
+<script>
+var galleryImages = [
+  { src: "imgs/slide_01.png", title: "封面展示" },
+  { src: "imgs/slide_02.png", title: "项目背景与意义" },
+  { src: "imgs/slide_03.png", title: "技术方案总览" },
+  { src: "imgs/slide_07.png", title: "液电分子调光原理" },
+  { src: "imgs/slide_08.png", title: "环境多参数传感系统" },
+  { src: "imgs/slide_13.png", title: "发条储能开窗单元" },
+  { src: "imgs/slide_14.png", title: "三模式能源自适应架构" },
+  { src: "imgs/slide_16.png", title: "创新技术总结" },
+];
+
+var galleryEl = document.getElementById("gallery");
+galleryImages.forEach(function(img, i) {
+  var item = document.createElement("div");
+  item.className = "gallery-item";
+  item.onclick = function() { openLightbox(i); };
+    item.innerHTML = '<img src="' + img.src + '" alt="' + img.title + '" loading="lazy"><div class="overlay"><span>' + img.title + '</span></div>';
+  galleryEl.appendChild(item);
+});
+
+var currentIndex = 0;
+function openLightbox(index) {
+  currentIndex = index;
+  document.getElementById("lightbox-img").src = galleryImages[index].src;
+  document.getElementById("lightbox").classList.add("active");
+  document.body.style.overflow = "hidden";
+}
+function closeLightbox() {
+  document.getElementById("lightbox").classList.remove("active");
+  document.body.style.overflow = "";
+}
+function navigate(dir) {
+  currentIndex = (currentIndex + dir + galleryImages.length) % galleryImages.length;
+  document.getElementById("lightbox-img").src = galleryImages[currentIndex].src;
+}
+document.getElementById("lightbox").addEventListener("click", function(e) {
+  if (e.target === this) closeLightbox();
+});
+document.addEventListener("keydown", function(e) {
+  if (!document.getElementById("lightbox").classList.contains("active")) return;
+  if (e.key === "Escape") closeLightbox();
+  if (e.key === "ArrowLeft") navigate(-1);
+  if (e.key === "ArrowRight") navigate(1);
+});
+</script>
+</body>
+</html>
